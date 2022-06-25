@@ -44,7 +44,13 @@ i=0
 while [ $i -lt 5 ]
 do
     echo "i is currently $i"
-    i=$[$i+1]#Not the lack of spaces around the brackets. This makes it a not a test expression
+    i=$[$i+1] #Not the lack of spaces around the brackets. This makes it a not a test expression
 done
 
 # until loop - loop executes until the condition is true
+
+i=5
+until [[ $i -eq 10 ]]; do
+    echo "$i"
+    i=$((i+1))
+done
