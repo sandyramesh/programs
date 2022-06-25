@@ -1,0 +1,3 @@
+Shell aliases are a simple way to create new commands or to wrap existing commands with code of your own. They somewhat overlap with shell functions, which are however more versatile and should therefore often be preferred.
+
+alias word='command'
