@@ -101,7 +101,6 @@ select * from table(dbms_xplan.display_cursor(''));
 
 
 ** Nested loops works when the tables are small / when there is an index involed.
- 
-
+** Whenever there is an index in join operation , optimizer picks nested loop join
  
  
