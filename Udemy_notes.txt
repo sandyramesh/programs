@@ -102,5 +102,11 @@ select * from table(dbms_xplan.display_cursor(''));
 
 ** Nested loops works when the tables are small / when there is an index involed.
 ** Whenever there is an index in join operation , optimizer picks nested loop join
+** For big tables, hash join is generally preferred.
+
+** SORT MERGE JOIN - It is used when there is a comprision operator between the tables.
+** HASH JOIN -- It is used when tables are big and doing FTS.also NO INDEX involved.
+
+
  
  
