@@ -1,0 +1,76 @@
+Optimizer 
+ |__ Query Transformer
+ |__ Estimator
+ |__Plan generator
+ 
+ Query Transformer  -- The query transformer transforms our queries into a better performing one.it has some techniques,implements them and compare the cost of these queries and picks the best one.
+   OR Expansion   -- OR clause won't use indexes
+   Subquery unnesting. -- Subqueries converts into join statement.
+   
+ ** Cost is an estimation based on stats.
+ 
+ Selectivity & Cardinality :
+   Selectivity is the estimated proportion of the rows that will return from our query based on the total rows of that table. 
+   if the selectivity is close to 0 but not 0,returns a small proportion of the table, means query has HIGH SELECTIVITY.
+   if the selectivity is close to 1,returns a big proportion of the table , means query has LOW SELECTIVITY.
+   
+   selectivity = Number of rows returning from the query/total number of rows
+   
+   Cardinality = Total number of rows X Selectivity.  (Expected number of rows returns from the query)
+   
+   Why Selectivity & Cardinality ?
+     Selectivity affects the estimates in I/O cost.
+     Selectivity affects the sort cost.
+     Cardinality is used to determine join,sort and filter costs.
+     Incorrect selectivity & cardinality = Incorrect Plan cost estimation.
+  
+ **** The optimizer cannot know the exact number of rows that will return from the query before running it. Because it may change for each value.Instead, it knows that the number of distinct values of the columns used in the where clause. so, it uses 1/num_distinct_rows approach to perform a selectivity estimation.
+ 
+ Cost : 
+   Cost is the optimizer's best estimate of the number of I/Os to execute a statement.
+   To estimate the cost, estimator uses:
+     Disk I/O
+     CPU Usage
+     Memory Usage
+     
+   Cost = (single block I/O cost(no.of single block reads X single block read time) + Multiblock I/O cost(No. of multiblock reads X Multiblock read time + Cpu Cost(No. of cpu cycles/CPU Speed) ) / Single block read time.
+  
+ ** Cost is an estimation based on stats. 
+   
+Plan Generator : 
+  Generates multiple plans. Based on the cost of the generated plans it picks the best generated plan based on the cost. Makes the estimator to calculate the costs.
+  After the plan is generated , it passes to the row source generator.
+  It generates the plan based on the different access paths, join methods and join orders.
+
+** Small table will be picked as driving table in join method.
+** Join order is important for performance in most of the cases.
+   Nested Loop(NL).
+   Sort merge Join(SM).
+   Hash Join(HA).
+
+Generating the exeution plans
+
+To analyze an execution plan
+
+Exaplain plan
+  explain plan for <select query>
+  select * from table(dbms_xplan.display());
+
+autotrace
+  set autotrace on
+  set autotrace on [explain|statistics]
+  set autotrae trace[only] on [explain|statistics]
+  set autotrace off
+
+  autotrace uses plan_table like the explain plan.
+
+  *** if you used bind variables, it might not have the exact execution plan.
+
+v$sql_plan
+
+	Actual execution plans are stored here.
+	it is very similar to plan_table but it has actual execution plan.
+
+
+ 
+ 
