@@ -108,5 +108,18 @@ select * from table(dbms_xplan.display_cursor(''));
 ** HASH JOIN -- It is used when tables are big and doing FTS.also NO INDEX involved.
 
 
- 
+Execution plan & statistics
+
+Where  to look ?
+  cost
+  Access Methods
+  Cardinality
+  Join Methods & join types.
+  Partition pruning.
+  Others
+
+
+
+
+
  
