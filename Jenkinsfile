@@ -12,6 +12,7 @@ pipeline {
         }
         stage('Python build') {
             steps {
+                sh 'yum -y install python'
                 sh 'python --version'
             }
         }
