@@ -8,9 +8,8 @@ pipeline {
                 echo 'Hello Ramesh'
                 sh 'chmod 777 test.sh'
                 sh './test.sh'
-            }
+            }   
         }
-        stages {
         stage('Python build') {
             steps {
                 sh 'python --version'
